@@ -70,10 +70,11 @@ public class NotesApiTest {
     @Test
     @Description("A note can be marked as completed")
     public void noteCanBeMarkedCompleted() {
-        String noteId = api.createNote(token, TestData.noteTitle(), TestData.noteDescription(), "Personal")
+        String title = TestData.noteTitle();
+        String noteId = api.createNote(token, title, TestData.noteDescription(), "Personal")
                 .jsonPath().getString("data.id");
 
-        Response updated = api.updateNoteCompleted(token, noteId, true);
+        Response updated = api.updateNote(token, noteId, title, TestData.noteDescription(), "Personal", true);
 
         Assert.assertEquals(updated.getStatusCode(), 200, "update status");
         Assert.assertTrue(updated.jsonPath().getBoolean("data.completed"), "note is completed");
