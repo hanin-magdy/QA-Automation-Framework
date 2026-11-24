@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class NotesPage {
+public class NotesPage extends BasePage {
 
     private static final By ADD_NOTE = By.cssSelector("[data-testid='add-new-note']");
     private static final By NOTE_TITLE = By.cssSelector("[data-testid='note-title']");
@@ -17,12 +17,8 @@ public class NotesPage {
     private static final By LOGOUT = By.cssSelector("[data-testid='logout']");
     private static final By NOTE_CARD_TITLES = By.cssSelector("[data-testid='note-card-title']");
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     public NotesPage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+        super(driver, wait);
     }
 
     public NotesPage open() {
@@ -39,11 +35,11 @@ public class NotesPage {
     }
 
     public NotesPage addNote(String title, String description, String category) {
-        wait.until(ExpectedConditions.elementToBeClickable(ADD_NOTE)).click();
+        clickReliably(ADD_NOTE);
         wait.until(ExpectedConditions.visibilityOfElementLocated(NOTE_TITLE)).sendKeys(title);
         driver.findElement(NOTE_DESCRIPTION).sendKeys(description);
         new Select(driver.findElement(NOTE_CATEGORY)).selectByVisibleText(category);
-        driver.findElement(NOTE_SUBMIT).click();
+        clickReliably(NOTE_SUBMIT);
         return this;
     }
 
