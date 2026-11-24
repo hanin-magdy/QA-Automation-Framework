@@ -58,8 +58,13 @@ public class NotesApiClient {
         return withToken(token).get("/notes/" + noteId);
     }
 
-    public Response updateNoteCompleted(String token, String noteId, boolean completed) {
-        return withToken(token).body(Map.of("completed", completed)).put("/notes/" + noteId);
+    /** The API requires the full note body on update, not only the changed field. */
+    public Response updateNote(String token, String noteId, String title, String description, String category, boolean completed) {
+        return withToken(token).body(Map.of(
+                "title", title,
+                "description", description,
+                "category", category,
+                "completed", completed)).put("/notes/" + noteId);
     }
 
     public Response deleteNote(String token, String noteId) {
