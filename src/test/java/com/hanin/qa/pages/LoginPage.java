@@ -6,18 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
     private static final By EMAIL = By.cssSelector("[data-testid='login-email']");
     private static final By PASSWORD = By.cssSelector("[data-testid='login-password']");
     private static final By SUBMIT = By.cssSelector("[data-testid='login-submit']");
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     public LoginPage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+        super(driver, wait);
     }
 
     public LoginPage open() {
@@ -28,7 +24,7 @@ public class LoginPage {
     public NotesPage login(String email, String password) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(EMAIL)).sendKeys(email);
         driver.findElement(PASSWORD).sendKeys(password);
-        driver.findElement(SUBMIT).click();
+        clickReliably(SUBMIT);
         return new NotesPage(driver, wait);
     }
 }
