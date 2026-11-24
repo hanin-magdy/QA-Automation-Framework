@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RegisterPage {
+public class RegisterPage extends BasePage {
 
     private static final By EMAIL = By.cssSelector("[data-testid='register-email']");
     private static final By NAME = By.cssSelector("[data-testid='register-name']");
@@ -15,12 +15,8 @@ public class RegisterPage {
     private static final By SUBMIT = By.cssSelector("[data-testid='register-submit']");
     private static final By SUCCESS_MESSAGE = By.xpath("//*[contains(text(),'User account created successfully')]");
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     public RegisterPage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+        super(driver, wait);
     }
 
     public RegisterPage open() {
@@ -33,7 +29,7 @@ public class RegisterPage {
         driver.findElement(NAME).sendKeys(name);
         driver.findElement(PASSWORD).sendKeys(password);
         driver.findElement(CONFIRM_PASSWORD).sendKeys(password);
-        driver.findElement(SUBMIT).click();
+        clickReliably(SUBMIT);
         return this;
     }
 
